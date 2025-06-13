@@ -2,7 +2,7 @@ import os
 
 # List of problem numbers
 with open('problems.txt', 'r') as file:
-    problem_numbers = list(map(int, file.read().split()))
+    problem_numbers = list(set(map(int, file.read().split())))
 
 # Maximum number of digits for padding zeros
 max_digits = 4
