@@ -28,9 +28,9 @@ class Solution:
     split_inv, nums = calculate_split_inversions(left, right)
     return (left_inv+right_inv+split_inv), nums
 
-
+'''
 sol = Solution()
-'''lst = [i for i in range(1,11)]
+lst = [i for i in range(1,11)]
 random.shuffle(lst)
 print(lst)
 tests = [lst]
@@ -40,12 +40,12 @@ for _ in range(10):
   tests.append(lst)
 for lst in tests:
   inv, _ = sol.calculate_inversions(lst)
-  print(inv)'''
+  print(inv)
 
 nums = []
 f = open("nums.txt", "r")
 for num in f.readlines():
   nums.append(int(num))
 inv, _ = sol.calculate_inversions(nums)
-print(inv)
+print(inv)'''
   
