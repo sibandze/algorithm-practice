@@ -16,10 +16,10 @@ for problem_number in problem_numbers:
 
     # Create README.md file
     with open(os.path.join(folder_name, "README.md"), "w") as f:
-        f.write()                 
+        f.write("TODO:")                 
 
                              
-    with open(os.path.join(folder_name, "# Problem {problem_number}\n")
+    with open(os.path.join(folder_name, "# Problem {problem_number}\n"))
 
     # Create solution.py file
     with open(os.path.join(folder_name, "solution.py"), "w") as f:
