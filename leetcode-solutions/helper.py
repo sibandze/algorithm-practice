@@ -16,7 +16,7 @@ for problem_number in problem_numbers:
 
     # Create README.md file
     with open(os.path.join(folder_name, "README.md"), "w") as f:
-        f.write(f"                              
+        f.write()                 
 
                              
     with open(os.path.join(folder_name, "# Problem {problem_number}\n")
