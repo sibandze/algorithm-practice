@@ -1,4 +1,3 @@
-import random
 class Solution:
   def calculate_inversions(self, nums):
     n = len(nums)
@@ -27,25 +26,3 @@ class Solution:
     right_inv, right = self.calculate_inversions(nums[n//2:])
     split_inv, nums = calculate_split_inversions(left, right)
     return (left_inv+right_inv+split_inv), nums
-
-
-sol = Solution()
-'''lst = [i for i in range(1,11)]
-random.shuffle(lst)
-print(lst)
-tests = [lst]
-for _ in range(10):
-  lst = [i for i in range(1,random.randint(1, 1000000))]
-  random.shuffle(lst)
-  tests.append(lst)
-for lst in tests:
-  inv, _ = sol.calculate_inversions(lst)
-  print(inv)'''
-
-nums = []
-f = open("nums.txt", "r")
-for num in f.readlines():
-  nums.append(int(num))
-inv, _ = sol.calculate_inversions(nums)
-print(inv)
-  
