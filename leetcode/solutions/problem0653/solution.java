@@ -26,14 +26,14 @@ class Solution {
         if (root.left == null && root.right == null){
             return false; // No two elements
         }
-        Deque<TreeNode> left_parents = new ArrayDeque<>();
+        Deque<TreeNode> left_queue = new ArrayDeque<>();
         while (left.left!=null){
-            left_parents.push(left);
+            left_queue.push(left);
             left = left.left;
         }
-        Deque<TreeNode> right_parents = new ArrayDeque<>();
+        Deque<TreeNode> right_queue = new ArrayDeque<>();
         while (right.right != null){
-            right_parents.push(right);
+            right_queue.push(right);
             right = right.right;
         }
         while (left.val != right.val){
@@ -43,18 +43,18 @@ class Solution {
             else if (left.val + right.val > k){
                 node = right.left;
                 while (node != null){
-                    right_parents.push(node);
+                    right_queue.push(node);
                     node = node.right;
                 }
-                right = right_parents.pop();
+                right = right_queue.pop();
             }
             else{
                 node = left.right;
                 while (node!=null){
-                    left_parents.push(node);
+                    left_queue.push(node);
                     node = node.left;
                 }
-                left = left_parents.pop();
+                left = left_queue.pop();
             }
         }
         return false;
