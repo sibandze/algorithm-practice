@@ -1,4 +1,4 @@
-** Leetcode Problem 1: Two Sum **
+Leetcode Problem 1: Two Sum
 ---
 
 ### **Algorithm Analysis: The Two Sum Problem**
