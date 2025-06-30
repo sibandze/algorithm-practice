@@ -1,5 +1,5 @@
 Leetcode 653: Two Sum IV - Input is a BST
-___
+---
 ### **Algorithm Analysis: Two Sum IV - Input is a BST**
 
 This problem extends the "Two Sum" concept to a Binary Search Tree (BST). Given the root of a BST and a target sum `k`, we need to determine if there exist two distinct nodes in the BST whose values sum up to `k`.
