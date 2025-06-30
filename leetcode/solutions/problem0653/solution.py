@@ -14,14 +14,14 @@ class Solution:
         if not root.left and not root.right:
             return False # No two elements
         
-        left_parents = []
+        left_queue = []
         while left.left:
-            left_parents.append(left)
+            left_queue.append(left)
             left = left.left
         
-        right_parents = []
+        right_queue = []
         while right.right:
-            right_parents.append(right)
+            right_queue.append(right)
             right = right.right
         
         while left.val != right.val:
@@ -31,17 +31,17 @@ class Solution:
             elif left.val + right.val > k:
                 node = right.left
                 while node:
-                    right_parents.append(node)
+                    right_queue.append(node)
                     node = node.right
                 
-                right = right_parents.pop()
+                right = right_queue.pop()
             
             else:
                 node = left.right
                 while node:
-                    left_parents.append(node)
+                    left_queue.append(node)
                     node = node.left
                 
-                left = left_parents.pop()
+                left = left_queue.pop()
             
         return False        
