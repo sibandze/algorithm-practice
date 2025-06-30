@@ -11,6 +11,6 @@ public class Solution {
             }
             num_map.put(nums[idx], idx);
         }
-        return new int[] {0,0};
+        throw new IllegalArgumentException("No solution found");
     }
 }
