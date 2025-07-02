@@ -1,4 +1,4 @@
-# Leetcode 3 Longest Palindrome Substring
+# Leetcode 5 Longest Palindrome Substring
 # Given a string s, return the longest palindromic substring in s.
 
 class Solution:
