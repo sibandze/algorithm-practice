@@ -28,4 +28,4 @@ class Solution:
                         right -= 1
                     left += 1
                     right -= 1
-        return ans# Solution for problem 15
+        return ans
