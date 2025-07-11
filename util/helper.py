@@ -3,8 +3,8 @@ import re
 
 directory = pathlib.Path("~/storage/downloads").expanduser()
 start = input().strip()  # strip whitespace
-if not start:
-    return
+while not start:
+    start = input().strip()  # strip whitespace
 
 pattern = rf'^.*({re.escape(start)}.*\.pdf)$'
 for file in directory.glob(f"*{start}*.pdf"):
