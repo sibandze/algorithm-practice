@@ -39,9 +39,9 @@ def main():
     root_dir = '.'  # Change this to the directory containing your problem folders
     completed, incomplete = get_problem_status(root_dir)
     
-    print("Completed Problems:")
+    print(f"Completed Problems: {len(completed)}")
     print(sorted(completed))
-    print("\nIncomplete Problems:")
+    print(f"\nIncomplete Problems: {len(incomplete)}")
     print(sorted(incomplete))
 
 if __name__ == "__main__":
