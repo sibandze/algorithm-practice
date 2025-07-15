@@ -111,11 +111,3 @@ Let $M$ be the length of `l1` and $N$ be the length of `l2`.
 * **Clear and Intuitive:** The use of stacks makes the "reverse traversal" and columnar addition logic straightforward to understand.
 * **Robust:** Handles lists of unequal lengths and final carry propagation correctly.
 * **Does Not Modify Inputs:** Preserves the original `l1` and `l2` linked lists.
-
-#### **Alternative Approaches (More Complex)**
-
-The "Follow up: Could you solve it without reversing the input lists?" often hints at solutions that avoid explicit stack usage as well, aiming for $O(1)$ auxiliary space. This is significantly more complex and typically involves:
-1.  **Padding:** Pad the shorter list with leading zeros (conceptually or by creating actual nodes) to make both lists the same length.
-2.  **Recursive Approach with Carry Return:** Perform a recursive sum from the end of the (padded) lists. The recursive function would return the sum of the current digits and pass the carry up the recursion chain. This usually requires two pointers in the initial call to find the ends, or calculating lengths first. This approach *can* be $O(1)$ auxiliary space for the main part, but the recursion stack itself uses $O(M+N)$ space, so effectively it's the same space complexity as the stack approach.
-
-The provided stack-based solution is generally the most straightforward and common way to satisfy the "without reversing" constraint for this problem.
