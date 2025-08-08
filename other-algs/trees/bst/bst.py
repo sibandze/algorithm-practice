@@ -79,7 +79,7 @@ class BST:
 	def find(self, key):
 		if not self.root:
 			return None
-		return _find(self.root, key)
+		return self_find(self.root, key)
 
 	def _find(self, node, key):
 		if not node:
@@ -89,14 +89,14 @@ class BST:
 		if comparator_result == 0:
 			return node
 		elif comparator_result > 0:
-			return _find(node.right, key)
-		return _find(node.left, key)
+			return self._find(node.right, key)
+		return self._find(node.left, key)
 
 	def contains_key(self, key):
 		return self.find(key) != None
 
 	def  get_data(self, key):
-		node = find(key)
+		node = self.find(key)
 		if not node:
 			return None
 		data_list = []
