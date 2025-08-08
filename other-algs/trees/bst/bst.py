@@ -79,7 +79,7 @@ class BST:
 	def find(self, key):
 		if not self.root:
 			return None
-		return self_find(self.root, key)
+		return self._find(self.root, key)
 
 	def _find(self, node, key):
 		if not node:
