@@ -12,7 +12,7 @@ class BSTNode(TreeNode):
 		# more specific subclasses (like AVLNode) or managed by the BST class itself.
 		# To handle duplicates and keep track of duplicates
 		self.key = key
-		self.data_store = [(data, 1)]
+		self.data_store = [[data, 1]]
 		self.size = 1
 
 	def insert(self, data, key_extractor, comparator):
@@ -21,10 +21,10 @@ class BSTNode(TreeNode):
 			raise Exception("Key mismatch: Node key {} does not match data key {}".format(self.key, data_key))
 		for i, (stored_data, count) in enumerate(self.data_store):
 			if stored_data == data:
-				self.data_store[i] = (stored_data, count + 1)
+				self.data_store[i][1] += 1
 				self.size += 1
 				return
-		self.data_store.append((data, 1))
+		self.data_store.append([data, 1])
 		self.size += 1
 
 	def delete(self, data, key_extractor, comparator):
@@ -48,7 +48,7 @@ class BSTNode(TreeNode):
 		if comparator(data_key, self.key) != 0:
 			raise Exception("Key mismatch: Node key {} does not match data key {}".format(self.key, data_key))
 
-		if len(self.data_store) > 0 and comparator(key, key_extractor(self.data_store[0][0])) == 0:
+		if len(self.data_store) > 0:
 			size = self.size
 			self.data_store.clear()
 			self.size = 0
