@@ -44,9 +44,8 @@ class BSTNode(TreeNode):
 		return False
 
 	def delete_key(self, key, key_extractor, comparator):
-		data_key = key_extractor(data)
-		if comparator(data_key, self.key) != 0:
-			raise Exception("Key mismatch: Node key {} does not match data key {}".format(self.key, data_key))
+		if comparator(key, self.key) != 0:
+			raise Exception("Key mismatch: Node key {} does not match data key {}".format(self.key, key))
 
 		if len(self.data_store) > 0:
 			size = self.size

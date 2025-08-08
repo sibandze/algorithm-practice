@@ -59,12 +59,12 @@ class BST:
 	def _insert_recursively(self, current_node, data, key):
 		'''
 		'''
-		current_key = self.key_extractor(current_node.data)
+		current_key = self.key_extractor(current_node.key)
 		comparator_result = self.comparator(key, current_key)
 
 		if comparator_result == 0:
 			print(f"The key `{key}`	already exists in tree. Handling duplicates.")
-			current_node.data = data
+			current_node.insert(data, self.key_extractor, self.comparator)
 		elif comparator_result > 0:
 			if not current_node.right:
 				current_node.right = BSTNode(data)
@@ -75,3 +75,32 @@ class BST:
 				current_node.left = BSTNode(data)
 			else:
 				self._insert_recursively(current_node.left, data, key)
+
+	def find(self, key):
+		if not self.root:
+			return None
+		return _find(self.root, key)
+
+	def _find(self, node, key):
+		if not node:
+			return None
+
+		comparator_result = self.comparator(key, node.key)
+		if comparator_result == 0:
+			return node
+		elif comparator_result > 0:
+			return _find(node.right, key)
+		return _find(node.left, key)
+
+	def contains_key(self, key):
+		return self.find(key) != None
+
+	def  get_data(self, key):
+		node = find(key)
+		if not node:
+			return None
+		data_list = []
+		for data, count in node.data_store:
+			for _ in range(count):
+				data_list.append(data)
+		return data_list
