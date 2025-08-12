@@ -6,12 +6,12 @@ class BSTNode(TreeNode):
 	This base BST node doesn't add tree-specific properties directly,
 	but serves as a clear indicator for BST structures.
 	"""
-	def __init__(self, key, data):
+	def __init__(self, data, key_extractor):
 		super().__init__(None) # Initialize data, left, right from TreeNode
 		# Additional properties like height or parent are often added by
 		# more specific subclasses (like AVLNode) or managed by the BST class itself.
 		# To handle duplicates and keep track of duplicates
-		self.key = key
+		self.key = key_extractor(data)
 		self.data_store = [[data, 1]]
 		self.size = 1
 
