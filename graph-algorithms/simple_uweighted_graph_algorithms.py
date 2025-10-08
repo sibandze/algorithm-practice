@@ -1,4 +1,4 @@
-class Graph_Algorithms:
+class Simple_Unweighted_Graph_Algorithms:
 	def single_source_reachability(self, G, s, t):
 		if s not in G or t not in G:
 			return False
