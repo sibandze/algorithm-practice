@@ -124,3 +124,26 @@ class Graph_Algorithms:
                     q.append((v, dist + 1))
 
         return distances, p
+
+    def connected_components(self, G: Dict[Any, List[Any]]) -> List[Dict[any, List[Any]]]:
+        #for undirected G
+        connected_components = []
+
+		unvisited_vertexes = set(G) # Create a set of all unvisited vertexes
+		for neighbors in G.values():
+             unvisited_vertexes.update(neighbors)
+
+        def dfs(v, components):
+            if v in G:
+                 for u in G[v]:
+				    if u in unvisited_vertexes:
+                        components[u] = G.get(u, [])
+                        unvisited_vertexes.remove(u)
+					    dfs(u, components)
+            return components
+
+        while unvisited_vertexes:
+			v = unvisited_vertexes.pop()
+            components = dfs(v, {v: G.get(v,[])})
+            connected_components.append(components)
+        return connected_components
