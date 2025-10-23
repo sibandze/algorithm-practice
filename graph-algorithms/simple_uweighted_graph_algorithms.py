@@ -125,25 +125,61 @@ class Graph_Algorithms:
 
         return distances, p
 
-    def connected_components(self, G: Dict[Any, List[Any]]) -> List[Dict[any, List[Any]]]:
-        #for undirected G
+    def _build_component_graph(self, G: Dict[Any, List[Any]], nodes: Set[Any]) -> Dict[Any, List[Any]]:
+        """
+        Helper to construct the adjacency list for a component given its set of nodes.
+        """
+        component_graph = {}
+        for node in nodes:
+            # Check G[node] to get only neighbors that are also in the component (i.e., in 'nodes')
+            # Using set intersection is robust, even though for a connected component
+            # all neighbors of a node in the component should also be in the component.
+            neighbors_in_component = [v for v in G.get(node, []) if v in nodes]
+            component_graph[node] = neighbors_in_component
+        return component_graph
+
+    def connected_components(self, G: Dict[Any, List[Any]]) -> List[Dict[Any, List[Any]]]:
+        """
+        Finds the connected components of an undirected graph G using BFS.
+        Each component is returned as an adjacency list subgraph.
+
+        Args:
+            G (Dict[Any, List[Any]]): The graph represented as an adjacency list.
+
+        Returns:
+            List[Dict[Any, List[Any]]]: A list of adjacency list subgraphs,
+                                        where each subgraph is a connected component.
+        """
+        # Ensure all nodes in the graph are considered, including isolated nodes
+        all_nodes = set(G.keys()) 
+        for neighbors in G.values():
+             all_nodes.update(neighbors)
+
+        # Initialize visited set for the entire graph traversal
+        visited = set()
         connected_components = []
 
-		unvisited_vertexes = set(G) # Create a set of all unvisited vertexes
-		for neighbors in G.values():
-             unvisited_vertexes.update(neighbors)
+        # Iterate over all nodes to find starting points for new components
+        for start_node in all_nodes:
+            if start_node not in visited:
+                # Found a new component, start BFS/DFS
+                component_nodes = set()
+                q = collections.deque([start_node])
+                visited.add(start_node)
+                component_nodes.add(start_node)
 
-        def dfs(v, components):
-            if v in G:
-                 for u in G[v]:
-				    if u in unvisited_vertexes:
-                        components[u] = G.get(u, [])
-                        unvisited_vertexes.remove(u)
-					    dfs(u, components)
-            return components
+                while q:
+                    u = q.popleft()
+                    
+                    # Ensure u is a key in G, as it might be an isolated node only in all_nodes
+                    for v in G.get(u, []): 
+                        if v not in visited:
+                            visited.add(v)
+                            component_nodes.add(v)
+                            q.append(v)
+                
+                # Build the adjacency list representation for the found component
+                component_graph = self._build_component_graph(G, component_nodes)
+                connected_components.append(component_graph)
 
-        while unvisited_vertexes:
-			v = unvisited_vertexes.pop()
-            components = dfs(v, {v: G.get(v,[])})
-            connected_components.append(components)
         return connected_components
