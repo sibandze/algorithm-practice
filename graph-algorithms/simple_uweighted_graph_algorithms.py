@@ -151,7 +151,7 @@ class Graph_Algorithms:
                                         where each subgraph is a connected component.
         """
         # Ensure all nodes in the graph are considered, including isolated nodes
-        all_nodes = set(G.keys()) 
+        all_nodes = set(G.keys())
         for neighbors in G.values():
              all_nodes.update(neighbors)
 
@@ -170,16 +170,24 @@ class Graph_Algorithms:
 
                 while q:
                     u = q.popleft()
-                    
+
                     # Ensure u is a key in G, as it might be an isolated node only in all_nodes
-                    for v in G.get(u, []): 
+                    for v in G.get(u, []):
                         if v not in visited:
                             visited.add(v)
                             component_nodes.add(v)
                             q.append(v)
-                
+
                 # Build the adjacency list representation for the found component
                 component_graph = self._build_component_graph(G, component_nodes)
                 connected_components.append(component_graph)
 
         return connected_components
+
+    def topological_sort(self, G: Dict[Any, List[Any]]):
+        sorted_vertex = []
+
+        def dfs(v, visited):
+
+
+
