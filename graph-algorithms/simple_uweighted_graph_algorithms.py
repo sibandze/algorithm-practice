@@ -1,5 +1,6 @@
-import collections import deque
+from collections import deque
 from typing import List, Dict, Tuple, Set, Any
+
 
 class Graph_Algorithms:
     def single_source_reachability(self, G: Dict[Any, List[Any]], s: Any, t: Any) -> bool:
@@ -70,7 +71,7 @@ class Graph_Algorithms:
         if s not in G or t not in G:
             return float('inf'), []
 
-        q = collections.deque([(s, 0)]) # Queue stores (node, distance)
+        q = deque([(s, 0)]) # Queue stores (node, distance)
         visited = {s}
         p = {} # Predecessor map
 
@@ -109,7 +110,7 @@ class Graph_Algorithms:
         distances = {node: float('inf') for node in G}
         p = {} # Predecessor map
 
-        q = collections.deque([(s, 0)]) # Queue stores (node, distance)
+        q = deque([(s, 0)]) # Queue stores (node, distance)
         visited = {s}
         distances[s] = 0 # Distance from s to s is 0
 
@@ -164,7 +165,7 @@ class Graph_Algorithms:
             if start_node not in visited:
                 # Found a new component, start BFS/DFS
                 component_nodes = set()
-                q = collections.deque([start_node])
+                q = deque([start_node])
                 visited.add(start_node)
                 component_nodes.add(start_node)
 
@@ -185,9 +186,24 @@ class Graph_Algorithms:
         return connected_components
 
     def topological_sort(self, G: Dict[Any, List[Any]]):
-        sorted_vertex = []
+        sorted_vertexes = []
+        visited = set()
 
-        def dfs(v, visited):
+        for v in G:
+            if v not in visited:
+                visited.add(v)
+                stack = [start_node]
+                current_path = {v}
+                sorted_vertexes.append(v)
 
+                while stack:
+                     node = stack.pop()
+                     if node not in visited:
+                          visited.add(node)
 
-
+                     # Add neighbors to the stack in reverse order
+                     for neighbor in reversed(graph[node]):
+                         if neighbor not in visited:
+                             stack.append(neighbor)
+                         if neighbor in current_path:
+                             return []
