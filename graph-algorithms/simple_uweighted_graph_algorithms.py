@@ -242,3 +242,47 @@ class Graph_Algorithms:
         # The list is built in reverse topological order (by finishing time),
         # so we reverse it for the final result.
         return sorted_vertexes[::-1]
+
+    def is_cyclic(self, G: Dict[Any, List[Any]]) -> bool:
+        """
+        Determines if a directed graph G contains a cycle using DFS.
+
+        Returns:
+            bool: True if a cycle is found, False otherwise.
+        """
+        all_nodes = set(G.keys())
+        for neighbors in G.values():
+            all_nodes.update(neighbors)
+
+        visited: Set[Any] = set()       # Fully explored nodes
+        current_path: Set[Any] = set()  # Nodes on the current recursion stack
+
+        def dfs(v: Any) -> bool:
+            # Cycle Detection: Node is already on the current recursion stack
+            if v in current_path:
+                return True
+
+            # Already fully explored, no cycle in its subtree
+            if v in visited:
+                return False
+
+            current_path.add(v)
+
+            # Traverse neighbors
+            for neighbor in G.get(v, []):
+                if dfs(neighbor):
+                    return True # Cycle found, propagate upwards
+
+            # Backtrack: Remove node from current path and mark as fully visited
+            current_path.remove(v)
+            visited.add(v)
+
+            return False
+
+        # Start DFS from every unvisited node to cover all components
+        for start_node in all_nodes:
+            if start_node not in visited:
+                if dfs(start_node):
+                    return True # Cycle detected
+
+        return False # No cycles found after checking all components
