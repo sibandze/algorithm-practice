@@ -189,21 +189,49 @@ class Graph_Algorithms:
         sorted_vertexes = []
         visited = set()
 
-        for v in G:
-            if v not in visited:
-                visited.add(v)
+        for start_node in G:
+            if start_node not in visited:
+                visited.add(start_node)
                 stack = [start_node]
-                current_path = {v}
-                sorted_vertexes.append(v)
+                current_path = {start_node}
+                sorted_vertexes.append(start_node)
 
                 while stack:
                      node = stack.pop()
                      if node not in visited:
-                          visited.add(node)
+                         visited.add(node)
+                         sorted_vertexes.append(node)
 
-                     # Add neighbors to the stack in reverse order
-                     for neighbor in reversed(graph[node]):
-                         if neighbor not in visited:
-                             stack.append(neighbor)
-                         if neighbor in current_path:
-                             return []
+                         # Add neighbors to the stack in reverse order
+                         for neighbor in reversed(G[node]):
+                             if neighbor not in visited:
+                                 stack.append(neighbor)
+                             if neighbor in current_path:
+                                 return [] # cycle detected
+            return sorted_vertexes
+
+# Directed Graph with a Cycle
+G_CYCLIC = {
+    1: [2],
+    2: [3],
+    3: [1, 4],  # Cycle: 1->2->3->1
+    4: [5],
+    5: [6],
+    6: []
+}
+
+solver = Graph_Algorithms()
+print(solver.topological_sort((G_CYCLIC)))
+
+# Directed Acyclic Graph (DAG)
+G_ACYCLIC = {
+    'A': ['C', 'D'],
+    'B': ['D', 'E'],
+    'C': ['F'],
+    'D': ['F', 'G'],
+    'E': [],
+    'F': ['H'],
+    'G': ['H'],
+    'H': []
+}
+print(solver.topological_sort((G_ACYCLIC)))
