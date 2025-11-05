@@ -185,55 +185,60 @@ class Graph_Algorithms:
 
         return connected_components
 
-    def topological_sort(self, G: Dict[Any, List[Any]]):
-        sorted_vertexes = []
-        visited = set()
-        current_path = set()
+    def topological_sort(self, G: Dict[Any, List[Any]]) -> List[Any]:
+        """
+        Computes a topological sort of a Directed Acyclic Graph (DAG) using 
+        Depth-First Search (DFS) and cycle detection.
 
-        def dfs(v):
+        Args:
+            G (Dict[Any, List[Any]]): The graph represented as an adjacency list.
+
+        Returns:
+            List[Any]: A list of nodes in topological order (reverse finishing time), 
+                       or an empty list if the graph contains a cycle.
+        """
+        # 1. Gather all nodes (keys and neighbors) to ensure coverage
+        all_nodes = set(G.keys())
+        for neighbors in G.values():
+            all_nodes.update(neighbors)
+
+        # State tracking for DFS
+        sorted_vertexes: List[Any] = []
+        visited: Set[Any] = set()       # Fully processed nodes
+        current_path: Set[Any] = set()  # Nodes on the current recursion stack
+
+        def dfs(v: Any) -> bool:
+            """
+            Performs DFS starting at v. Returns True if a cycle is found, False otherwise.
+            """
+            # Cycle Check: Node is already on the current path/recursion stack
             if v in current_path:
-                return True  # cycle found
+                return True
+
+            # Already processed (and part of a previous, valid component)
             if v in visited:
                 return False
-            visited.add(v)
-            current_path.add(v)
-            for neighbor in G[v]:
-                if dfs(neighbor):
-                    return True
 
+            # Mark for start of exploration
+            current_path.add(v)
+
+            # Traverse neighbors (G.get(v, []) handles nodes with no outgoing edges)
+            for neighbor in G.get(v, []):
+                if dfs(neighbor):
+                    return True # Cycle found, propagate upwards
+
+            # Mark for end of exploration (Post-Order Traversal)
             current_path.remove(v)
+            visited.add(v)
             sorted_vertexes.append(v)
             return False
 
-        for start_node in G:
+        # Start DFS from every unvisited node to cover all components
+        for start_node in all_nodes:
             if start_node not in visited:
                 if dfs(start_node):
-                    return []
+                    return [] # Cycle detected, return empty list immediately
 
+        # The list is built in reverse topological order (by finishing time),
+        # so we reverse it for the final result.
         return sorted_vertexes[::-1]
-
-# Directed Graph with a Cycle
-G_CYCLIC = {
-    1: [2],
-    2: [3],
-    3: [1, 4],  # Cycle: 1->2->3->1
-    4: [5],
-    5: [6],
-    6: []
-}
-
-solver = Graph_Algorithms()
-print(solver.topological_sort((G_CYCLIC)))
-
-# Directed Acyclic Graph (DAG)
-G_ACYCLIC = {
-    'A': ['C', 'D'],
-    'B': ['D', 'E'],
-    'C': ['F'],
-    'D': ['F', 'G'],
-    'E': [],
-    'F': ['H'],
-    'G': ['H'],
-    'H': []
-}
-print(solver.topological_sort((G_ACYCLIC)))
