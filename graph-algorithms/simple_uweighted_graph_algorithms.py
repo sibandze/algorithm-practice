@@ -188,27 +188,29 @@ class Graph_Algorithms:
     def topological_sort(self, G: Dict[Any, List[Any]]):
         sorted_vertexes = []
         visited = set()
+        current_path = set()
+
+        def dfs(v):
+            if v in current_path:
+                return True  # cycle found
+            if v in visited:
+                return False
+            visited.add(v)
+            current_path.add(v)
+            for neighbor in G[v]:
+                if dfs(neighbor):
+                    return True
+
+            current_path.remove(v)
+            sorted_vertexes.append(v)
+            return False
 
         for start_node in G:
             if start_node not in visited:
-                visited.add(start_node)
-                stack = [start_node]
-                current_path = {start_node}
-                sorted_vertexes.append(start_node)
+                if dfs(start_node):
+                    return []
 
-                while stack:
-                     node = stack.pop()
-                     if node not in visited:
-                         visited.add(node)
-                         sorted_vertexes.append(node)
-
-                         # Add neighbors to the stack in reverse order
-                         for neighbor in reversed(G[node]):
-                             if neighbor not in visited:
-                                 stack.append(neighbor)
-                             if neighbor in current_path:
-                                 return [] # cycle detected
-            return sorted_vertexes
+        return sorted_vertexes[::-1]
 
 # Directed Graph with a Cycle
 G_CYCLIC = {
