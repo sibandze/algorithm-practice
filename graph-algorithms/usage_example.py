@@ -74,3 +74,54 @@ for i, component in enumerate(components):
     component_nodes = sorted(component.keys())
     print(f"   Component {i+1} (Nodes: {component_nodes}):")
     print(f"     {component}")
+
+print()
+
+# --- 1. Define Directed Graphs ---
+
+# Acyclic Graph (DAG): A -> C, A -> D, B -> D, B -> E, C -> F, D -> F, D -> G, F -> H, G -> H
+G_ACYCLIC = {
+    'A': ['C', 'D'],
+    'B': ['D', 'E'],
+    'C': ['F'],
+    'D': ['F', 'G'],
+    'E': [],
+    'F': ['H'],
+    'G': ['H'],
+    'H': []
+}
+
+# Cyclic Graph: Cycle 1 -> 2 -> 3 -> 1
+G_CYCLIC = {
+    1: [2],
+    2: [3],
+    3: [1, 4], 
+    4: [5],
+    5: [6],
+    6: []
+}
+
+# --- 2. Initialize the Class ---
+graph_solver = Graph_Algorithms()
+
+print("--- Directed Graph Analysis (Topological Sort) ---")
+
+# --- 3. Test on Acyclic Graph (DAG) ---
+print("\n## 🌳 Test on G_ACYCLIC (DAG)")
+print(f"Graph Nodes: {list(G_ACYCLIC.keys())}")
+top_sort_acyclic = graph_solver.topological_sort(G_ACYCLIC)
+print(f"Result: **{top_sort_acyclic}**")
+if top_sort_acyclic:
+    print("Status: Success - A valid topological order was found.")
+else:
+    print("Status: Failure - Cycle Detected.")
+
+# --- 4. Test on Cyclic Graph ---
+print("\n## ➡️ Test on G_CYCLIC (Cyclic)")
+print(f"Graph Nodes: {list(G_CYCLIC.keys())}")
+top_sort_cyclic = graph_solver.topological_sort(G_CYCLIC)
+print(f"Result: **{top_sort_cyclic}**")
+if not top_sort_cyclic:
+    print("Status: **Success - Cycle Detected** (returns empty list as designed).")
+else:
+    print("Status: Failure - Incorrectly returned a sort for a cyclic graph.")
