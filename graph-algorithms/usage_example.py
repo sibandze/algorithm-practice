@@ -1,4 +1,4 @@
-from simple_uweighted_graph_algorithms import Graph_Algorithms
+from simple_uweighted_graph_algorithms import Unweoghted_Graph_Algorithms as Graph_Algoriths
 
 # --- 1. Define a Sample Graph (Adjacency List) ---
 # The graph is undirected and unweighted.

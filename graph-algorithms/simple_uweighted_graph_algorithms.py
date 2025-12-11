@@ -2,7 +2,7 @@ from collections import deque
 from typing import List, Dict, Tuple, Set, Any
 
 
-class Graph_Algorithms:
+class Unweighted_Graph_Algorithms:
     def single_source_reachability(self, G: Dict[Any, List[Any]], s: Any, t: Any) -> bool:
         """
         Determines if node t is reachable from node s in an unweighted graph G

@@ -1,13 +1,13 @@
 import os
 
 # List of problem numbers
-problem_numbers = [1,3,4,11,22,50]
+problem_numbers = [30]
 # Maximum number of digits for padding zeros
 max_digits = 4
 
 for problem_number in problem_numbers:
     # Create folder name with leading zeros
-    folder_name = f"problem{str(problem_number)}"
+    folder_name = f"problem{str(problem_number).zfill(max_digits)}"
 
     # Create folder
     os.makedirs(folder_name, exist_ok=True)
